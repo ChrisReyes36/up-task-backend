@@ -9,6 +9,7 @@ const environmentsSchema = z.object({
   MONGO_DB: z.string().min(1),
   MONGO_USERNAME: z.string().min(1),
   MONGO_PASSWORD: z.string().min(1),
+  FRONT_END_URL: z.string().min(1),
 });
 
 const parsedEnvironments = environmentsSchema.safeParse(process.env);
