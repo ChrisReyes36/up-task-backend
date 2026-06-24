@@ -10,6 +10,11 @@ const environmentsSchema = z.object({
   MONGO_USERNAME: z.string().min(1),
   MONGO_PASSWORD: z.string().min(1),
   FRONT_END_URL: z.string().min(1),
+  MAIL_HOST: z.string().min(1),
+  MAIL_PORT: z.coerce.number().int().positive(),
+  MAIL_SECURE: z.string().min(1),
+  MAIL_USER: z.string().min(1),
+  MAIL_PASSWORD: z.string().min(1),
 });
 
 const parsedEnvironments = environmentsSchema.safeParse(process.env);

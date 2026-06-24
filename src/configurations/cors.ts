@@ -5,6 +5,10 @@ const corsConfig: CorsOptions = {
   origin: function (origin, callback) {
     const whiteList = [environments.FRONT_END_URL];
 
+    if (process.argv[2] === "--api") {
+      whiteList.push(undefined);
+    }
+
     if (whiteList.includes(origin)) {
       callback(null, true);
     } else {
