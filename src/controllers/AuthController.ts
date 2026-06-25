@@ -105,4 +105,37 @@ export default class AuthController {
       res.status(500).json({ error: error.message });
     }
   };
+
+  static requestConfirmationCode = async (req: Request, res: Response) => {
+    try {
+      const {
+        body: { email },
+      } = req;
+
+      const user = await User.findOne({ email });
+
+      if (!user)
+        return res.status(404).json({ error: "Usuario no encontrado" });
+
+      if (user.confirmed)
+        return res.status(409).json({ error: "El usuario ya está confirmado" });
+
+      const token = new Token({
+        token: generateToken(),
+        user: user.id,
+      });
+
+      await AuthEmail.sendConfirmationEmail({
+        email: user.email,
+        name: user.name,
+        token: token.token,
+      });
+
+      await Promise.allSettled([user.save(), token.save()]);
+
+      res.status(200).send("Se envió un nuevo token a tu e-mail");
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 }
