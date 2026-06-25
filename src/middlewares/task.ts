@@ -27,7 +27,9 @@ export async function taskExists(
 
     next();
   } catch (error) {
-    res.status(500).json({ error: "Hubo un error" });
+    res
+      .status(500)
+      .json({ error: "Ha ocurrido un error inesperado, inténtalo más tarde" });
   }
 }
 

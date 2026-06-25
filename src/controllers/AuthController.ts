@@ -36,7 +36,9 @@ export default class AuthController {
 
       res.status(201).send("Cuenta creada, revisa tu email para confirmarla");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -58,7 +60,9 @@ export default class AuthController {
 
       res.status(200).send("Cuenta confirmada correctamente");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -102,7 +106,11 @@ export default class AuthController {
 
       res.status(200).send("Autenticado...");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 
@@ -135,11 +143,9 @@ export default class AuthController {
 
       res.status(200).send("Se envió un nuevo token a tu e-mail");
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -169,7 +175,11 @@ export default class AuthController {
 
       res.status(200).send("Revisa tu email para instrucciones");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 
@@ -186,7 +196,11 @@ export default class AuthController {
 
       res.status(200).send("Token válido, define tu nuevo password");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 
@@ -209,7 +223,11 @@ export default class AuthController {
 
       res.status(200).send("El password se modificó correctamente");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 }

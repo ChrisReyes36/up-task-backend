@@ -12,7 +12,11 @@ export default class TaskController {
 
       res.status(200).json(tasks);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 
@@ -31,7 +35,11 @@ export default class TaskController {
 
       res.status(201).send("Tarea creada correctamente");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 
@@ -41,7 +49,11 @@ export default class TaskController {
     try {
       res.status(200).json(task);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 
@@ -56,7 +68,11 @@ export default class TaskController {
 
       res.status(200).send("Tarea actualizada correctamente");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 
@@ -72,7 +88,11 @@ export default class TaskController {
 
       res.status(200).send("Tarea eliminada correctamente");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 
@@ -89,7 +109,11 @@ export default class TaskController {
 
       res.status(200).send("Tarea actualizada correctamente");
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res
+        .status(500)
+        .json({
+          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+        });
     }
   };
 }
