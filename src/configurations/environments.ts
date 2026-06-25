@@ -15,6 +15,11 @@ const environmentsSchema = z.object({
   MAIL_SECURE: z.string().min(1),
   MAIL_USER: z.string().min(1),
   MAIL_PASSWORD: z.string().min(1),
+  JWT_SECRET: z.string().min(1),
+  JWT_EXPIRES_IN: z
+    .string()
+    .regex(/^\d+[smhd]$/, "JWT_EXPIRES_IN debe ser algo como 5m, 1h, 7d")
+    .default("5m"),
 });
 
 const parsedEnvironments = environmentsSchema.safeParse(process.env);

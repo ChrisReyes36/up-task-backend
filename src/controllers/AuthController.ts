@@ -4,6 +4,7 @@ import { checkPassword, hashPassword } from "../utils/auth";
 import Token from "../models/Token";
 import { generateToken } from "../utils/token";
 import AuthEmail from "../emails/AuthEmail";
+import { generateJWT } from "../utils/jwt";
 
 export default class AuthController {
   static createAccount = async (req: Request, res: Response) => {
@@ -104,13 +105,13 @@ export default class AuthController {
           error: "Password incorrecto",
         });
 
-      res.status(200).send("Autenticado...");
+      const token = generateJWT({ id: user._id });
+
+      res.status(200).send(token);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -175,11 +176,9 @@ export default class AuthController {
 
       res.status(200).send("Revisa tu email para instrucciones");
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -196,11 +195,9 @@ export default class AuthController {
 
       res.status(200).send("Token válido, define tu nuevo password");
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -223,11 +220,9 @@ export default class AuthController {
 
       res.status(200).send("El password se modificó correctamente");
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 }
