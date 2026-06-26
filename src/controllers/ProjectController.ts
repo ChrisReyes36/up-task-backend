@@ -22,7 +22,7 @@ export default class ProjectController {
 
     try {
       const projects = await Project.find({
-        $or: [{ manager: { $in: user._id } }],
+        $or: [{ manager: user._id }, { team: user._id }],
       }).populate("tasks");
 
       res.status(200).json(projects);
@@ -45,7 +45,10 @@ export default class ProjectController {
       if (!project)
         return res.status(404).json({ error: "Proyecto no encontrado" });
 
-      if (project.manager.toString() !== user._id.toString())
+      if (
+        project.manager.toString() !== user._id.toString() &&
+        !project.team.includes(user._id)
+      )
         return res.status(403).json({ error: "Acción no válida" });
 
       res.status(200).json(project);
