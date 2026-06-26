@@ -2,24 +2,6 @@ import type { Request, Response } from "express";
 import Task from "../models/Task";
 
 export default class TaskController {
-  static getProjectTasks = async (req: Request, res: Response) => {
-    const { project } = req;
-
-    try {
-      const tasks = await Task.find({ project: project._id }).populate(
-        "project",
-      );
-
-      res.status(200).json(tasks);
-    } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
-    }
-  };
-
   static createTask = async (req: Request, res: Response) => {
     const { body, project } = req;
 
@@ -35,11 +17,25 @@ export default class TaskController {
 
       res.status(201).send("Tarea creada correctamente");
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
+    }
+  };
+
+  static getProjectTasks = async (req: Request, res: Response) => {
+    const { project } = req;
+
+    try {
+      const tasks = await Task.find({ project: project._id }).populate(
+        "project",
+      );
+
+      res.status(200).json(tasks);
+    } catch (error) {
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -49,11 +45,9 @@ export default class TaskController {
     try {
       res.status(200).json(task);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -68,11 +62,9 @@ export default class TaskController {
 
       res.status(200).send("Tarea actualizada correctamente");
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -88,11 +80,9 @@ export default class TaskController {
 
       res.status(200).send("Tarea eliminada correctamente");
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 
@@ -109,11 +99,9 @@ export default class TaskController {
 
       res.status(200).send("Tarea actualizada correctamente");
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Ha ocurrido un error inesperado, inténtalo más tarde",
-        });
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
     }
   };
 }

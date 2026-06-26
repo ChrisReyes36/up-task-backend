@@ -9,10 +9,11 @@ import { authenticate } from "../middlewares/auth";
 
 const router = Router();
 
+router.use(authenticate);
+
 router.post(
   "/",
   [
-    authenticate,
     body("projectName")
       .notEmpty()
       .withMessage("El nombre del proyecto es obligatorio"),
@@ -27,11 +28,13 @@ router.post(
   ProjectController.createProject,
 );
 router.get("/", ProjectController.getAllProjects);
+
 router.get(
   "/:id",
   [param("id").isMongoId().withMessage("ID no válido"), handleInputErrors],
   ProjectController.getProjectById,
 );
+
 router.put(
   "/:id",
   [
@@ -49,6 +52,7 @@ router.put(
   ],
   ProjectController.updateProject,
 );
+
 router.delete(
   "/:id",
   [param("id").isMongoId().withMessage("ID no válido"), handleInputErrors],
@@ -70,6 +74,7 @@ router.post(
   ],
   TaskController.createTask,
 );
+
 router.get(
   "/:projectId/tasks",
   [param("projectId").isMongoId().withMessage("ID proyecto no válido")],

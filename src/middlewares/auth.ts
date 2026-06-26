@@ -30,6 +30,7 @@ export const authenticate = async (
 
       if (user) {
         req.user = user;
+        next();
       } else {
         res.status(500).json("Token No Válido");
       }
@@ -37,6 +38,4 @@ export const authenticate = async (
   } catch (error) {
     res.status(500).json("Token No Válido");
   }
-
-  next();
 };
