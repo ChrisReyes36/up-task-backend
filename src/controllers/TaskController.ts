@@ -40,9 +40,14 @@ export default class TaskController {
   };
 
   static getTaskById = async (req: Request, res: Response) => {
-    const { task } = req;
+    const { task: taskRequest } = req;
 
     try {
+      const task = await Task.findById(taskRequest._id).populate({
+        path: "completedBy.user",
+        select: "_id name email",
+      });
+
       res.status(200).json(task);
     } catch (error) {
       res.status(500).json({
@@ -90,11 +95,14 @@ export default class TaskController {
     const {
       body: { status },
       task,
+      user,
     } = req;
 
     try {
       task.status = status;
 
+      const data = { user: user._id, status };
+      task.completedBy.push(data);
       await task.save();
 
       res.status(200).send("Tarea actualizada correctamente");
