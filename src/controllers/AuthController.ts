@@ -229,4 +229,56 @@ export default class AuthController {
   static user = async (req: Request, res: Response) => {
     res.status(200).json(req.user);
   };
+
+  static updateProfile = async (req: Request, res: Response) => {
+    const {
+      body: { name, email },
+      user,
+    } = req;
+
+    const userExists = await User.findOne({ email });
+
+    if (userExists && userExists._id.toString() !== user._id.toString())
+      return res.status(409).json({ error: "El email ya está registrado" });
+
+    user.name = name;
+    user.email = email;
+
+    try {
+      await user.save();
+      res.status(200).send("Perfil actualizado correctamente");
+    } catch (error) {
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
+    }
+  };
+
+  static updateCurrentPassword = async (req: Request, res: Response) => {
+    const {
+      body: { current_password: currentPassword, password },
+    } = req;
+
+    const user = await User.findById(req.user._id);
+    const isPasswordCorrect = await checkPassword(
+      currentPassword,
+      user.password,
+    );
+
+    if (!isPasswordCorrect)
+      return res
+        .status(401)
+        .json({ error: "El password actual es incorrecto" });
+
+    user.password = await hashPassword(password);
+
+    try {
+      await user.save();
+      res.status(200).send("El password se modificó correctamente");
+    } catch (error) {
+      res.status(500).json({
+        error: "Ha ocurrido un error inesperado, inténtalo más tarde",
+      });
+    }
+  };
 }
