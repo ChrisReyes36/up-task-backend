@@ -43,10 +43,15 @@ export default class TaskController {
     const { task: taskRequest } = req;
 
     try {
-      const task = await Task.findById(taskRequest._id).populate({
-        path: "completedBy.user",
-        select: "_id name email",
-      });
+      const task = await Task.findById(taskRequest._id)
+        .populate({
+          path: "completedBy.user",
+          select: "_id name email",
+        })
+        .populate({
+          path: "notes",
+          populate: { path: "createdBy", select: "_id name email" },
+        });
 
       res.status(200).json(task);
     } catch (error) {

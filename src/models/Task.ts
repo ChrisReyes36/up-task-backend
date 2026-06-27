@@ -19,6 +19,7 @@ export interface ITask extends Document {
     user: Types.ObjectId;
     status: TaskStatus;
   }[];
+  notes: Types.ObjectId[];
 }
 
 export const TaskSchema = new Schema<ITask>(
@@ -41,6 +42,7 @@ export const TaskSchema = new Schema<ITask>(
         },
       },
     ],
+    notes: [{ type: Types.ObjectId, ref: "Note" }],
   },
   { timestamps: true },
 );
