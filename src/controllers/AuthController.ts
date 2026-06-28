@@ -281,4 +281,20 @@ export default class AuthController {
       });
     }
   };
+
+  static checkPassword = async (req: Request, res: Response) => {
+    const {
+      body: { password },
+    } = req;
+
+    const user = await User.findById(req.user._id);
+    const isPasswordCorrect = await checkPassword(password, user.password);
+
+    if (!isPasswordCorrect)
+      return res
+        .status(401)
+        .json({ error: "El password actual es incorrecto" });
+
+    res.status(200).send("Password Correcto");
+  };
 }
